@@ -53,7 +53,7 @@ def generate_identifier(
 
         is_pac = pac_init is not None and pac_end is not None
 
-        make_image("data/background.png", identifier, file_path, is_pac)
+        make_image("../../data/background.png", identifier, file_path, is_pac)
 
         percent = _resolve_progress(idx, len(identifier_list))
 

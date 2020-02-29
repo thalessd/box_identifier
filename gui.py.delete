@@ -2,9 +2,9 @@ from PySide2.QtWidgets import QApplication, QLabel, QWidget, \
     QGridLayout, QPushButton, QLineEdit, QProgressBar, \
     QCheckBox, QMessageBox, QFileDialog
 from PySide2.QtGui import QIntValidator, QIcon
-from make_identifier.generate_identifier import generate_identifier
+from .scripts.generate_identifier import generate_identifier
 from threading import Thread
-from make_identifier.helpers import resource_path
+from .scripts.helpers import resource_path
 
 
 def make_default_input(layout, col, row, placeholder, value=None):

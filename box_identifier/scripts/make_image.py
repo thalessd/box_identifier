@@ -1,12 +1,12 @@
 from PIL import Image, ImageDraw, ImageFont
-from make_identifier.helpers import resource_path
+from box_identifier.scripts.helpers import resource_path
 
 
 def make_image(image_path, identifier_str, out_path, is_pac=False):
 
     image_path_normalized = resource_path(image_path)
 
-    font_path_normalized = resource_path("data/bebas_neue.ttf")
+    font_path_normalized = resource_path("../../data/bebas_neue.ttf")
 
     bg = Image.open(image_path_normalized).convert("RGBA")
 
