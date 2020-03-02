@@ -10,16 +10,20 @@ def _resolve_progress(current_idx, tot_items):
     return int(current_idx * 100 / tot_items)
 
 
+def _progress(percent):
+    return
+
+
 def generate_identifier(
         background_path,
         font_path,
         out_path,
         make_zip,
-        progress,
         r_init, r_end,
         ct_init, ct_end,
         pac_init=None, pac_end=None,
-        is_small=True
+        is_small=True,
+        progress=_progress,
 ):
 
     now = datetime.now()

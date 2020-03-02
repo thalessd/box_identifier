@@ -12,10 +12,10 @@ if __name__ == '__main__':
         font_path=constants.DEFAULT_FONT,
         out_path="./",
         make_zip=True,
-        progress=progress,
         r_init=1,
         r_end=4,
         ct_init=1,
         ct_end=4,
-        is_small=True
+        is_small=True,
+        progress=progress,
     )
