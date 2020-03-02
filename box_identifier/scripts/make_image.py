@@ -1,32 +1,40 @@
 from PIL import Image, ImageDraw, ImageFont
-from box_identifier.scripts.helpers import resource_path
 
 
-def make_image(image_path, identifier_str, out_path, is_pac=False):
+def config_font_size(bg_scale, is_pac, is_small):
+    if is_small:
+        return int(bg_scale * (0.093 if is_pac else 0.12))
+    else:
+        return int(bg_scale * (0.086 if is_pac else 0.13))
 
-    image_path_normalized = resource_path(image_path)
 
-    font_path_normalized = resource_path("../../data/bebas_neue.ttf")
+def config_y_position(bg_scale, is_pac, is_small):
+    if is_small:
+        return int(bg_scale * (0.585 if is_pac else 0.57))
+    else:
+        return int(bg_scale * (0.80 if is_pac else 0.772))
 
-    bg = Image.open(image_path_normalized).convert("RGBA")
 
+def make_image(image_path, font_path, identifier_str, out_path, is_pac=False, is_small=True):
+
+    bg = Image.open(image_path).convert("RGBA")
     txt = Image.new('RGBA', bg.size, (255, 255, 255, 0))
 
     bg_width, bg_height = bg.size
 
-    bg_scale = bg_width * bg_height / 2
+    bg_scale = bg_width + bg_height / 2
 
-    font_size = int(bg_scale * (0.00023 if is_pac else 0.00034))
+    font_size = config_font_size(bg_scale, is_pac, is_small)
 
-    text_y_position = int(bg_scale * (0.00223 if is_pac else 0.00216))
-
-    font = ImageFont.truetype(font_path_normalized, font_size)
+    font = ImageFont.truetype(font_path, font_size)
 
     d_ctx = ImageDraw.Draw(txt)
 
     text_width, text_height = d_ctx.textsize(identifier_str, font)
 
     text_x_position = (bg_width - text_width) / 2
+
+    text_y_position = config_y_position(bg_scale, is_pac, is_small)
 
     d_ctx.text(
         (text_x_position, text_y_position),

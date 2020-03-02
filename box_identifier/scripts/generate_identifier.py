@@ -11,11 +11,15 @@ def _resolve_progress(current_idx, tot_items):
 
 
 def generate_identifier(
-        out_path, make_zip,
+        background_path,
+        font_path,
+        out_path,
+        make_zip,
         progress,
         r_init, r_end,
         ct_init, ct_end,
         pac_init=None, pac_end=None,
+        is_small=True
 ):
 
     now = datetime.now()
@@ -53,7 +57,7 @@ def generate_identifier(
 
         is_pac = pac_init is not None and pac_end is not None
 
-        make_image("../../data/background.png", identifier, file_path, is_pac)
+        make_image(background_path, font_path, identifier, file_path, is_pac, is_small)
 
         percent = _resolve_progress(idx, len(identifier_list))
 
