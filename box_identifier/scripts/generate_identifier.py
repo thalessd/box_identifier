@@ -4,6 +4,7 @@ from datetime import datetime
 from .make_image import make_image
 from .make_identifier_list import make_identifier_list
 from .helpers import random_hex_uppercase
+from .constants import GENERATED_DIR_NAME
 
 
 def _resolve_progress(current_idx, tot_items):
@@ -11,7 +12,7 @@ def _resolve_progress(current_idx, tot_items):
 
 
 def _progress(percent):
-    return
+    return percent
 
 
 def generate_identifier(
@@ -30,7 +31,8 @@ def generate_identifier(
 
     lot = random_hex_uppercase(6)
 
-    dir_name = "ADESIVOS PARA RAMAIS LOTE {}_{}".format(
+    dir_name = "{} {}_{}".format(
+        GENERATED_DIR_NAME,
         lot,
         now.strftime("%d_%m_%Y_%H_%M_%S"),
     )
