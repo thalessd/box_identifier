@@ -3,8 +3,8 @@ import shutil
 from datetime import datetime
 from .make_image import make_image
 from .make_identifier_list import make_identifier_list
-from .helpers import random_hex_uppercase
-from .constants import GENERATED_DIR_NAME
+from box_identifier.helpers import random_hex_uppercase
+from box_identifier.constants import GENERATED_DIR_NAME
 
 
 def _resolve_progress(current_idx, tot_items):

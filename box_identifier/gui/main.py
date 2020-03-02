@@ -1,17 +1,20 @@
 import sys
+import os
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtWidgets import QApplication
 from PySide2.QtCore import QFile
-import os.path as path
-from box_identifier.scripts import constants
+from box_identifier import constants
 
 
-def run():
+def main():
     app = QApplication(sys.argv)
 
     app.setStyle('Fusion')
 
-    file = QFile(path.join(constants.VIEWS_FOLDER, "mainwindow.ui"))
+    main_ui_path = constants.LOAD_VIEW("main.ui")
+
+    file = QFile(main_ui_path)
+
     file.open(QFile.ReadOnly)
 
     loader = QUiLoader()
@@ -23,4 +26,3 @@ def run():
     window.show()
 
     sys.exit(app.exec_())
-

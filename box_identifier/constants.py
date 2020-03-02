@@ -1,9 +1,14 @@
 import os.path as path
-from .helpers import resource_path
+from box_identifier.helpers import resource_path
+
+
+def load_view(view_name):
+    return resource_path("box_identifier/gui/{}".format(view_name))
+
 
 DATA_FOLDER = resource_path("data")
 
-VIEWS_FOLDER = resource_path("views")
+LOAD_VIEW = load_view
 
 PLACEHOLDER_BACKGROUND_LARGE = path.join(DATA_FOLDER, "background_large.png")
 
