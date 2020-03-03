@@ -1,10 +1,10 @@
 import os.path
 import shutil
 from datetime import datetime
-from .make_image import make_image
-from .make_identifier_list import make_identifier_list
 from box_identifier.helpers import random_hex_uppercase
 from box_identifier.constants import GENERATED_DIR_NAME
+from .IdentifierImage import IdentifierImage
+from .Identifiers import Identifiers
 
 
 def _resolve_progress(current_idx, tot_items):
@@ -41,15 +41,17 @@ def generate_identifier(
 
     os.mkdir(dir_path)
 
-    identifier_list = make_identifier_list(
+    identifiers = Identifiers(
         r_init, r_end,
         ct_init, ct_end,
         pac_init, pac_end
     )
 
+    identifiers_list = identifiers.list()
+
     file_paths = []
 
-    for idx, identifier in enumerate(identifier_list, 1):
+    for idx, identifier in enumerate(identifiers_list, 1):
 
         file_name = "{}-{}.png".format(
             identifier,
@@ -63,9 +65,15 @@ def generate_identifier(
 
         is_pac = pac_init is not None and pac_end is not None
 
-        make_image(background_path, font_path, identifier, file_path, is_pac, is_small)
+        identifier_image = IdentifierImage(identifier, background_path, font_path)
 
-        percent = _resolve_progress(idx, len(identifier_list))
+        identifier_image.is_pac = is_pac
+
+        identifier_image.is_small = is_small
+
+        identifier_image.save(file_path)
+
+        percent = _resolve_progress(idx, len(identifiers_list))
 
         progress(percent)
 

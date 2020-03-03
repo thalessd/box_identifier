@@ -87,7 +87,7 @@ class Main(QObject):
         self.btn_generate.clicked.connect(self.generate_handler)
 
     def generate_handler(self):
-        print("Generate Click")
+        print("Teste de Input {}".format(self.input_r_init.text()))
 
 
 def main():
