@@ -1,4 +1,4 @@
-from box_identifier import app_run, IdentifierImage, generate_identifier, constants
+from box_identifier import app_run, IdentifierImage, IdentifierFiles, constants
 
 
 def placeholder_progres(percent):
@@ -6,7 +6,6 @@ def placeholder_progres(percent):
 
 
 if __name__ == '__main__':
-    print("")
     # image_identifier = IdentifierImage("Str_test", constants.PLACEHOLDER_BACKGROUND_SMALL, constants.DEFAULT_FONT)
     #
     # image_identifier.is_pac = True
@@ -15,16 +14,21 @@ if __name__ == '__main__':
 
     # app_run()
 
-    generate_identifier(
+    identifier_files = IdentifierFiles(
         background_path=constants.PLACEHOLDER_BACKGROUND_SMALL,
         font_path=constants.DEFAULT_FONT,
         out_path="./",
-        make_zip=True,
         r_init=1,
         r_end=4,
         ct_init=1,
         ct_end=4,
-        is_small=True,
-        progress=placeholder_progres,
     )
+
+    identifier_files.make_zip = False
+
+    identifier_files.is_small = True
+
+    identifier_files.save("./", placeholder_progres)
+
+    pass
 

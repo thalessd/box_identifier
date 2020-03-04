@@ -1,2 +1,2 @@
-from .generate_identifier import generate_identifier
+from .IdentifierFiles import IdentifierFiles
 from .IdentifierImage import IdentifierImage
