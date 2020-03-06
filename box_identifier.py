@@ -33,5 +33,9 @@ if __name__ == '__main__':
 
     drop_box = DropBox()
 
+    file_list = drop_box.all_file_names()
+
+    drop_box.get_temp_file_path(file_list[1]["path"])
+
     pass
 

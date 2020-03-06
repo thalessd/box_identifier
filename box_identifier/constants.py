@@ -1,5 +1,10 @@
 import os.path as path
 from box_identifier.helpers import resource_path
+from configparser import ConfigParser
+
+config = ConfigParser()
+
+config.read(resource_path("config.ini"))
 
 
 def load_view(view_name):
@@ -19,3 +24,5 @@ DEFAULT_FONT = path.join(DATA_FOLDER, "bebas_neue.ttf")
 APP_ICON = path.join(DATA_FOLDER, "icon.png")
 
 GENERATED_DIR_NAME = "ADESIVOS PARA RAMAIS LOTE"
+
+DROPBOX_ACCESS_TOKEN = config['APP']['DROPBOX_ACCESS_TOKEN']
