@@ -1,7 +1,8 @@
 from PySide2.QtCore import QObject
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import QFile
-from PySide2.QtWidgets import QPushButton, QLineEdit, QComboBox, QCheckBox, QProgressBar, QGraphicsView
+from PySide2.QtWidgets import QPushButton, QLineEdit, QComboBox, QCheckBox, QProgressBar, QGraphicsView,\
+    QDialog, QVBoxLayout
 from PySide2.QtGui import QIntValidator, QIcon
 from box_identifier import constants
 
@@ -86,4 +87,6 @@ class MainWindow(QObject):
         self.btn_generate.clicked.connect(self.generate_handler)
 
     def generate_handler(self):
-        print("Teste de Input {}".format(self.input_r_init.text()))
+        first_load_dialog = FirstLoadDialog()
+
+        first_load_dialog.show()

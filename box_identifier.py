@@ -13,7 +13,7 @@ if __name__ == '__main__':
     #
     # image_identifier.save("./teste.png")
 
-    # app_run()
+    app_run()
     #
     # identifier_files = IdentifierFiles(
     #     background_path=constants.PLACEHOLDER_BACKGROUND_SMALL,
@@ -31,11 +31,11 @@ if __name__ == '__main__':
     #
     # identifier_files.save("./", placeholder_progress)
 
-    drop_box = DropBox()
-
-    file_list = drop_box.all_file_names()
-
-    drop_box.get_temp_file_path(file_list[1]["path"])
+    # drop_box = DropBox()
+    #
+    # file_list = drop_box.all_file_names()
+    #
+    # drop_box.get_temp_file_path(file_list[1]["path"])
 
     pass
 
