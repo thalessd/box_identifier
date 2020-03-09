@@ -7,6 +7,7 @@ def main():
     app = QApplication(sys.argv)
     app.setStyle('Fusion')
 
-    _main_window = MainWindow()
+    _main_window = MainWindow(app)
 
     sys.exit(app.exec_())
+

@@ -14,12 +14,11 @@ class IdentifierFiles:
 
     __identifiers_list = []
 
-    def __init__(self, background_path, font_path, out_path,
+    def __init__(self, background_path, font_path,
                  r_init, r_end, ct_init, ct_end, pac_init=None, pac_end=None):
 
         self.background_path = background_path
         self.font_path = font_path
-        self.out_path = out_path
 
         self.r_init = r_init
         self.r_end = r_end
