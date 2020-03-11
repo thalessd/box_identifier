@@ -92,7 +92,7 @@ class IdentifierFiles:
             if progress:
                 percent = self.__resolve_progress(idx, len(self.__identifiers_list))
 
-                progress(percent)
+                progress(int(percent))
 
         if self.make_zip:
             shutil.make_archive(dir_path, "zip", dir_path)
