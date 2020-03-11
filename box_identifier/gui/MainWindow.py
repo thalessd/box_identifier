@@ -1,7 +1,7 @@
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import QFile, QRectF, Qt, QObject, QThreadPool
 from PySide2.QtWidgets import QPushButton, QLineEdit, QComboBox, QCheckBox, QProgressBar, QGraphicsView,\
-    QMessageBox, QGraphicsScene, QFileDialog
+    QMessageBox, QGraphicsScene, QFileDialog, QLabel
 from PySide2.QtGui import QIntValidator, QIcon, QPixmap
 from box_identifier.services import DropBox
 from box_identifier.generate_identifier import IdentifierImage, IdentifierFiles
@@ -28,6 +28,10 @@ class MainWindow(QObject):
     graphics_view = QGraphicsView
 
     btn_generate = QPushButton
+    btn_clear = QPushButton
+
+    label_un = QLabel
+    label_cm = QLabel
 
     icon = None
 
@@ -83,11 +87,10 @@ class MainWindow(QObject):
         self.graphics_view = find_child(QGraphicsView, 'graphics_view')
 
         self.btn_generate = find_child(QPushButton, 'btn_generate')
+        self.btn_clear = find_child(QPushButton, 'btn_clear')
 
-    @staticmethod
-    def __config_line_edit(lines_edit):
-        for line_edit in lines_edit:
-            line_edit.setValidator(QIntValidator(0, 99))
+        self.label_un = find_child(QLabel, 'label_un')
+        self.label_cm = find_child(QLabel, 'label_cm')
 
     def __first_config(self):
         self.__config_line_edit([
@@ -100,18 +103,9 @@ class MainWindow(QObject):
         ])
 
         self.btn_generate.clicked.connect(self.__generate_handler)
+        self.btn_clear.clicked.connect(self.__clear_handler)
         self.select_background.currentIndexChanged.connect(self.__select_handler)
         self.check_large.stateChanged.connect(self.__check_large_handler)
-
-    def __show_ok_msg_box(self, text, icon):
-        msg_box = QMessageBox()
-
-        msg_box.setIcon(icon)
-        msg_box.setText(text)
-        msg_box.setWindowTitle(text)
-        msg_box.setWindowIcon(self.icon)
-        msg_box.setStandardButtons(QMessageBox.Ok)
-        msg_box.exec_()
 
     def __generate_handler(self):
 
@@ -157,14 +151,29 @@ class MainWindow(QObject):
 
         self.window.activateWindow()
 
-    def __directory_dialog(self):
-        dialog = QFileDialog(self.window)
-        dialog.setFileMode(QFileDialog.DirectoryOnly)
+    def __clear_handler(self):
+        inputs = [
+            self.input_r_init,
+            self.input_r_end,
+            self.input_ct_init,
+            self.input_ct_end,
+            self.input_pac_init,
+            self.input_pac_end,
+        ]
 
-        if dialog.exec_() == QFileDialog.Accepted:
-            return dialog.selectedFiles()[0]
+        for input_field in inputs:
+            input_field.setText("")
 
-        return None
+        self.select_background.setCurrentIndex(0)
+        self.check_large.setChecked(False)
+        self.check_zip.setChecked(False)
+        self.label_un.setText("0 un")
+        self.label_cm.setText("0 cm")
+
+        self.graphics_view.setScene(QGraphicsScene())
+
+        self.tmp_path = ""
+
 
     def __select_handler(self, idx):
         list_idx = idx - 1
@@ -186,6 +195,25 @@ class MainWindow(QObject):
 
         self.__file_show_worker(dbx_path)
 
+    def __show_ok_msg_box(self, text, icon):
+        msg_box = QMessageBox()
+
+        msg_box.setIcon(icon)
+        msg_box.setText(text)
+        msg_box.setWindowTitle(text)
+        msg_box.setWindowIcon(self.icon)
+        msg_box.setStandardButtons(QMessageBox.Ok)
+        msg_box.exec_()
+
+    def __directory_dialog(self):
+        dialog = QFileDialog(self.window)
+        dialog.setFileMode(QFileDialog.DirectoryOnly)
+
+        if dialog.exec_() == QFileDialog.Accepted:
+            return dialog.selectedFiles()[0]
+
+        return None
+
     def __disable_all_widgets(self, disabled):
         widgets = [
             self.input_r_init,
@@ -197,11 +225,17 @@ class MainWindow(QObject):
             self.select_background,
             self.check_large,
             self.check_zip,
-            self.btn_generate
+            self.btn_generate,
+            self.btn_clear
         ]
 
         for widget in widgets:
             widget.setDisabled(disabled)
+
+    @staticmethod
+    def __config_line_edit(lines_edit):
+        for line_edit in lines_edit:
+            line_edit.setValidator(QIntValidator(0, 99))
 
     """ Worker Functions """
 
@@ -210,6 +244,7 @@ class MainWindow(QObject):
     def __files_list_worker(self):
 
         self.btn_generate.setDisabled(True)
+        self.btn_clear.setDisabled(True)
         self.select_background.setDisabled(True)
         self.check_large.setDisabled(True)
 
@@ -243,6 +278,7 @@ class MainWindow(QObject):
         self.select_background.setDisabled(False)
         self.check_large.setDisabled(False)
         self.btn_generate.setDisabled(False)
+        self.btn_clear.setDisabled(False)
 
         self.progress_bar.setMaximum(100)
         self.progress_bar.setValue(0)
@@ -252,6 +288,7 @@ class MainWindow(QObject):
         self.select_background.setDisabled(True)
         self.check_large.setDisabled(True)
         self.btn_generate.setDisabled(True)
+        self.btn_clear.setDisabled(False)
         self.progress_bar.setMaximum(100)
         self.progress_bar.setValue(0)
 
@@ -262,6 +299,7 @@ class MainWindow(QObject):
     def __file_show_worker(self, dbx_path):
 
         self.btn_generate.setDisabled(True)
+        self.btn_clear.setDisabled(True)
         self.select_background.setDisabled(True)
         self.check_large.setDisabled(False)
 
@@ -321,6 +359,7 @@ class MainWindow(QObject):
         self.check_large.setDisabled(False)
         self.select_background.setDisabled(False)
         self.btn_generate.setDisabled(False)
+        self.btn_clear.setDisabled(False)
 
         self.progress_bar.setMaximum(100)
         self.progress_bar.setValue(0)
@@ -331,6 +370,7 @@ class MainWindow(QObject):
         self.select_background.setDisabled(False)
         self.check_large.setDisabled(False)
         self.btn_generate.setDisabled(True)
+        self.btn_clear.setDisabled(False)
         self.progress_bar.setMaximum(100)
         self.progress_bar.setValue(0)
 
