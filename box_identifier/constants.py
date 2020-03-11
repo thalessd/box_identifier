@@ -15,9 +15,9 @@ DATA_FOLDER = resource_path("data")
 
 LOAD_VIEW = load_view
 
-PLACEHOLDER_BACKGROUND_LARGE = path.join(DATA_FOLDER, "background_large.png")
+PLACEHOLDER_BACKGROUND_LARGE = path.join(DATA_FOLDER, "background_large.png")  # Usar para testes.
 
-PLACEHOLDER_BACKGROUND_SMALL = path.join(DATA_FOLDER, "background_small.png")
+PLACEHOLDER_BACKGROUND_SMALL = path.join(DATA_FOLDER, "background_small.png")  # Usar para testes.
 
 DEFAULT_FONT = path.join(DATA_FOLDER, "bebas_neue.ttf")
 
