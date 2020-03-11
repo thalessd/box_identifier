@@ -4,7 +4,7 @@ from PySide2.QtWidgets import QPushButton, QLineEdit, QComboBox, QCheckBox, QPro
     QMessageBox, QGraphicsScene, QFileDialog, QLabel
 from PySide2.QtGui import QIntValidator, QIcon, QPixmap
 from box_identifier.services import DropBox
-from box_identifier.generate_identifier import IdentifierImage, IdentifierFiles
+from box_identifier.generate_identifier import IdentifierImage, IdentifierFiles, Identifiers
 from box_identifier import constants
 from PIL.ImageQt import ImageQt
 from .worker import Worker
@@ -186,6 +186,21 @@ class MainWindow(QObject):
 
         self.__file_show_worker(self.dbx_path_selected)
 
+    def __all_line_edit_handler(self):
+        try:
+            list_len = Identifiers(
+                int(self.input_r_init.text()),
+                int(self.input_r_end.text()),
+                int(self.input_ct_init.text()),
+                int(self.input_ct_end.text()),
+                int(self.input_pac_init.text()) if self.input_pac_init.text() else None,
+                int(self.input_pac_end.text()) if self.input_pac_end.text() else None,
+            ).list_len()
+
+            self.label_un.setText("{} un".format(list_len))
+        except:
+            self.label_un.setText("0 un")
+
     def __check_large_handler(self):
 
         is_check_large = self.check_large.isChecked()
@@ -238,10 +253,10 @@ class MainWindow(QObject):
         for widget in widgets:
             widget.setDisabled(disabled)
 
-    @staticmethod
-    def __config_line_edit(lines_edit):
+    def __config_line_edit(self, lines_edit):
         for line_edit in lines_edit:
             line_edit.setValidator(QIntValidator(0, 99))
+            line_edit.textChanged.connect(self.__all_line_edit_handler)
 
     """ Worker Functions """
 
