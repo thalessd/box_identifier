@@ -21,6 +21,19 @@ class Identifiers:
 
         return self.__resolve_two(self.r_init, self.r_end, self.ct_init, self.ct_end)
 
+    def list_len(self):
+        if not self.__compare_params(self.r_init, self.r_end):
+            return 0
+
+        if not self.__compare_params(self.ct_init, self.ct_end):
+            return 0
+
+        if self.__compare_params(self.pac_init, self.pac_end):
+            return (self.r_end - self.r_init + 1) * (self.ct_end - self.ct_init + 1) *\
+                   (self.pac_end - self.pac_init + 1)
+
+        return (self.r_end - self.r_init + 1) * (self.ct_end - self.ct_init + 1)
+
     @staticmethod
     def __compare_params(p1, p2):
         return p1 is not None and p2 is not None and 0 < p1 <= p2
