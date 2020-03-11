@@ -102,6 +102,8 @@ class MainWindow(QObject):
             self.input_pac_end,
         ])
 
+        self.label_cm.setText("13x15 cm")
+
         self.btn_generate.clicked.connect(self.__generate_handler)
         self.btn_clear.clicked.connect(self.__clear_handler)
         self.select_background.currentIndexChanged.connect(self.__select_handler)
@@ -168,12 +170,10 @@ class MainWindow(QObject):
         self.check_large.setChecked(False)
         self.check_zip.setChecked(False)
         self.label_un.setText("0 un")
-        self.label_cm.setText("0 cm")
 
         self.graphics_view.setScene(QGraphicsScene())
 
         self.tmp_path = ""
-
 
     def __select_handler(self, idx):
         list_idx = idx - 1
@@ -187,6 +187,12 @@ class MainWindow(QObject):
         self.__file_show_worker(self.dbx_path_selected)
 
     def __check_large_handler(self):
+
+        is_check_large = self.check_large.isChecked()
+
+        label_cm_text = "13x25 cm" if is_check_large else "13x15 cm"
+
+        self.label_cm.setText(label_cm_text)
 
         dbx_path = self.dbx_path_selected
 
